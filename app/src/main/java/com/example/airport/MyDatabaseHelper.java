@@ -50,7 +50,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper
         long exec = db.insert(TABLE_NAME, null, cv);
         return exec;
     }
-    public Cursor readDataPlayer()
+    public Cursor readDataAirport()
     {
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT * FROM " + TABLE_NAME;
@@ -60,5 +60,21 @@ public class MyDatabaseHelper extends SQLiteOpenHelper
             cursor = db.rawQuery(query, null);
         }
         return cursor;
+    }
+    public long changeAirport(String id, String name, String city, String address)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(FIELD_NAME, name);
+        cv.put(FIELD_CITY, city);
+        cv.put(FIELD_ADDRESS, address);
+        long exec = db.update(TABLE_NAME, cv, "id = ?", new String[]{id});
+        return exec;
+    }
+    public long deleteAirport(String id)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        long exec = db.delete(TABLE_NAME, "id = ?", new String[]{id});
+        return exec;
     }
 }

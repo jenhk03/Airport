@@ -56,52 +56,52 @@ public class AdapterAirport extends RecyclerView.Adapter<AdapterAirport.ViewHold
             tvCity = itemView.findViewById(R.id.tv_city);
             tvAddress = itemView.findViewById(R.id.tv_address);
             itemView.setOnLongClickListener(new View.OnLongClickListener()
-                                            {
-                                                @Override
-                                                public boolean onLongClick(View v)
-                                                {
-                                                    AlertDialog.Builder message = new AlertDialog.Builder(ctx);
-                                                    message.setTitle("Caution!");
-                                                    message.setMessage("Anda memilih " + tvName.getText().toString() + ". Pilih perintah yang diinginkan");
-                                                    message.setCancelable(true);
-                                                    message.setPositiveButton("Ubah", new DialogInterface.OnClickListener()
-                                                            {
-                                                                @Override
-                                                                public void onClick(DialogInterface dialog, int which)
-                                                                {
-                                                                    Intent intent = new Intent(ctx, ChangeActivity.class);
-                                                                    intent.putExtra("varID", tvID.getText().toString());
-                                                                    intent.putExtra("varName", tvName.getText().toString());
-                                                                    intent.putExtra("varCity", tvCity.getText().toString());
-                                                                    intent.putExtra("varAddress", tvAddress.getText().toString());
-                                                                    ctx.startActivity(intent);
-                                                                }
-                                                            }
-                                                    );
-                                                    message.setNegativeButton("Hapus", new DialogInterface.OnClickListener()
-                                                            {
-                                                                @Override
-                                                                public void onClick(DialogInterface dialog, int which)
-                                                                {
-                                                                    MyDatabaseHelper myDB = new MyDatabaseHelper(ctx);
-                                                                    long exec = myDB.deletePlayer(tvID.getText().toString());
-                                                                    if (exec == -1)
-                                                                    {
-                                                                        Toast.makeText(ctx, "Gagal menghapus data", Toast.LENGTH_SHORT).show();
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        Toast.makeText(ctx, "Sukses menghapus data", Toast.LENGTH_SHORT).show();
-                                                                        dialog.dismiss();
-                                                                        ((MainActivity) ctx).onResume();
-                                                                    }
-                                                                }
-                                                            }
-                                                    );
-                                                    message.show();
-                                                    return false;
-                                                }
-                                            }
+            {
+                @Override
+                public boolean onLongClick(View v)
+                {
+                    AlertDialog.Builder message = new AlertDialog.Builder(ctx);
+                    message.setTitle("Caution!");
+                    message.setMessage("Anda memilih " + tvName.getText().toString() + ". Pilih perintah yang diinginkan");
+                    message.setCancelable(true);
+                    message.setPositiveButton("Ubah", new DialogInterface.OnClickListener()
+                    {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which)
+                        {
+                            Intent intent = new Intent(ctx, ChangeActivity.class);
+                            intent.putExtra("varID", tvID.getText().toString());
+                            intent.putExtra("varName", tvName.getText().toString());
+                            intent.putExtra("varCity", tvCity.getText().toString());
+                            intent.putExtra("varAddress", tvAddress.getText().toString());
+                            ctx.startActivity(intent);
+                        }
+                    }
+                    );
+                    message.setNegativeButton("Hapus", new DialogInterface.OnClickListener()
+                            {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which)
+                        {
+                            MyDatabaseHelper myDB = new MyDatabaseHelper(ctx);
+                            long exec = myDB.deleteAirport(tvID.getText().toString());
+                            if (exec == -1)
+                            {
+                                Toast.makeText(ctx, "Gagal menghapus data!", Toast.LENGTH_SHORT).show();
+                            }
+                            else
+                            {
+                                Toast.makeText(ctx, "Berhasil menghapus data!", Toast.LENGTH_SHORT).show();
+                                dialog.dismiss();
+                                ((MainActivity) ctx).onResume();
+                            }
+                        }
+                    }
+                    );
+                    message.show();
+                    return false;
+                }
+            }
             );
         }
     }
